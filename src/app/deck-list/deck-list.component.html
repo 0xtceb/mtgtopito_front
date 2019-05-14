@@ -1,0 +1,20 @@
+<div *ngFor="let deck of decks" class="deck-list">
+  <button mat-flat-button (click)="deckDetail(deck)">
+    <mat-card class="deck-card">
+      <mat-card-header>
+        <mat-card-title>{{ deck.name }}</mat-card-title>
+        <mat-card-subtitle>{{ deck.commander.name }}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image [src]="deck.commander.imageUrl">
+    </mat-card>
+  </button>
+</div>
+
+<div class="row add-deck" *ngIf="decks.length==0">
+  <div class="col-xl-12 text-center">
+    <span class="label-add-deck">Tu n'as pas encore de deck !</span>
+  </div>
+  <div class="col-xl-12 text-center ">
+    <button mat-icon-button routerLink="/deck" matTooltip="Créer un deck"><mat-icon aria-label="Ajouter">add</mat-icon></button>
+  </div>
+</div>

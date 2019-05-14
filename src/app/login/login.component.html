@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>Identifiez vous</h1>
+<div mat-dialog-content>
+  <form>
+    <mat-form-field>
+      <input matInput placeholder="Email" autocomplete="email" [formControl]="emailFormControl"
+             [errorStateMatcher]="matcher" (keyup.enter)="login()">
+      <mat-hint>Entrez votre email</mat-hint>
+      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+        Entrez un email valide.
+      </mat-error>
+      <mat-error *ngIf="emailFormControl.hasError('required')">
+        Ce champ est <strong>obligatoire</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput autocomplete="current-password" placeholder="Mot de passe" type="password" [formControl]="passwordFormControl"
+             [errorStateMatcher]="matcher" (keyup.enter)="login()">
+      <mat-hint>Entrez votre mot de passe</mat-hint>
+      <mat-error *ngIf="passwordFormControl.hasError('required')">
+        Ce champ est <strong>obligatoire</strong>
+      </mat-error>
+    </mat-form-field>
+  </form>
+
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button (click)="login()">Valider</button>
+    <span class="filler"></span>
+    <button mat-flat-button (click)="close()">Annuler</button>
+</div>

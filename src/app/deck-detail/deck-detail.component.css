@@ -1,0 +1,24 @@
+.is-loading ::ng-deep .mat-option-text {
+  display: flex;
+  justify-content: center;
+}
+
+.searchCommander {
+  width: 100%;
+}
+
+.searchCard {
+  width: 100%;
+}
+
+.cardPres{
+  width: 100px;
+}
+
+.addBtn{
+  margin-top: 13px!important;
+}
+
+mat-form-field{
+    width: 100%;
+}

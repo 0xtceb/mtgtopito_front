@@ -1,0 +1,48 @@
+<h1 mat-dialog-title class="font-title">Créer un compte</h1>
+<div mat-dialog-content>
+  <form>
+    <mat-form-field  class="full-width">
+      <input matInput placeholder="Pseudo*" autocomplete="nickname" [formControl]="nickFormControl"
+             [errorStateMatcher]="matcher">
+      <mat-error *ngIf="nickFormControl.hasError('minlength')">
+        Pseudo trop court.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Email*" autocomplete="email" [formControl]="emailFormControl"
+      [errorStateMatcher]="matcher">
+      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+        Entrez un email valide.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Mot de passe*" autocomplete="current-password" type="password" (keyup)="enableConfirm()" [formControl]="passwordFormControl"
+             [errorStateMatcher]="matcher">
+      <mat-error *ngIf="passwordFormControl.hasError('minlength')">
+        Mot de passe trop court (4 caractères min).
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Confirmation*" autocomplete="current-password" type="password" [formControl]="confirmFormControl"
+             [errorStateMatcher]="matcher">
+      <mat-hint *ngIf="confirmFormControl.value.length === 0">Confirmez le mot de passe</mat-hint>
+      <mat-error *ngIf="confirmFormControl.hasError('matchPassword') && !confirmFormControl.hasError('required')">
+        Mots de passe différents.
+      </mat-error>
+    </mat-form-field>
+    <div>
+    <div class="captcha">
+      <re-captcha class="full-width" (resolved)="resolved($event)" siteKey="6LfQFKMUAAAAAD5VAtikqU9704blz4j3IThAnLGd"></re-captcha>
+    </div>
+    </div>
+  </form>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="register()">Valider</button>
+  <span class="filler"></span>
+  <button mat-flat-button (click)="close()">Annuler</button>
+</div>

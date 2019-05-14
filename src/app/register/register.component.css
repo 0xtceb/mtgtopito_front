@@ -1,0 +1,32 @@
+.full-width {
+  width: 100%;
+}
+
+.mat-dialog-content{
+  overflow-y: auto;
+}
+
+.captcha {
+  transform:scale(0.9);
+  transform-origin:0;
+  margin: 0 auto;
+  width: 304px;
+}
+
+@media screen and (min-width: 200px) and (max-width : 500px) {
+    .captcha {
+      transform:scale(0.7)!important;
+      transform-origin:0;
+      margin: 0 auto;
+      width: 304px;
+    }
+}
+
+@media screen and (max-width : 770px) {
+    .captcha {
+      transform:scale(1);
+      transform-origin:0;
+      margin: 0 auto;
+      width: 304px;
+    }
+}
