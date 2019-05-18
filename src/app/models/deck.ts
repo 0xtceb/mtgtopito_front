@@ -4,5 +4,15 @@ export class Deck {
   uid: number;
   name: string;
   commander: Card;
-  cards?: Card[];
+  cards?: DeckCard[];
+}
+
+export class DeckCard {
+  card: Card;
+  quantity: number;
+
+  constructor(card: Card, quantity: number = 1){
+    this.card = card;
+    this.quantity = quantity
+  }
 }

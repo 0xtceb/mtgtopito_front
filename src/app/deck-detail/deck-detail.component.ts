@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material';
-import { Deck } from '../models/deck';
+import { Deck, DeckCard } from '../models/deck';
 import { DeckService } from '../services/deck.service';
 import { CardService } from '../services/card.service';
 import { Card } from '../models/card';
@@ -87,7 +87,8 @@ export class DeckDetailComponent implements OnInit {
     if(!this.deck.cards) {
       this.deck.cards = [];
     }
-    this.deck.cards.push(card);
+    let deckCard = new DeckCard(card);
+    this.deck.cards.push(deckCard);
     this.dataSource = new MatTableDataSource(this.deck.cards);
   }
 
