@@ -19,7 +19,7 @@ export class DeckDetailComponent implements OnInit {
               private cardService: CardService) { }
 
   dataSource = new MatTableDataSource();
-  columnsToDisplay = ['name', 'type'];
+  columnsToDisplay = ['name', 'type', 'quantity'];
 
   deck: Deck;
   selectedCommander: Card;
@@ -33,14 +33,17 @@ export class DeckDetailComponent implements OnInit {
   commanderIsLoading: boolean = false;
   cardIsLoading: boolean = false;
 
+  quantity = 1;
   loadImage: boolean = false;
 
 
   ngOnInit() {
     if (this.route.children.length > 0) {
+
       const id = this.route.children[0].snapshot.paramMap.get("id");
       this.deckService.getDeck(id).subscribe(deck => {
         this.deck = deck;
+        this.commanderSearchControl.setValue(this.deck.commander);
         this.dataSource = new MatTableDataSource(this.deck.cards);
       });
 
@@ -83,12 +86,13 @@ export class DeckDetailComponent implements OnInit {
     }
   }
 
-  addCard(card:Card) {
+  addCard(card:Card, quantity:number = 1) {
     if(!this.deck.cards) {
       this.deck.cards = [];
     }
-    let deckCard = new DeckCard(card);
+    let deckCard = new DeckCard(card, quantity);
     this.deck.cards.push(deckCard);
+    this.quantity = 1;
     this.dataSource = new MatTableDataSource(this.deck.cards);
   }
 
