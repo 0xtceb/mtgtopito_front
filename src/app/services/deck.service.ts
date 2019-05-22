@@ -4,6 +4,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Deck } from '../models/deck';
+import { Card } from '../models/card';
 import { environment } from '../../environments/environment';
 //import { DECKS } from '../DECKS';
 
@@ -29,8 +30,18 @@ export class DeckService {
     return this.http.get<Deck>(environment.apiUrl + environment.decks + uid);
   }
 
-  addDeck(deck: Deck): void {
-    this.http.post(environment.apiUrl + environment.decks, deck);
+  addDeck(deck: Deck): Observable<any> {
+    let commander:Card = deck.commander;
+
+    return this.http.post(environment.apiUrl + environment.decks, {
+      name: deck.name,
+      commander: {
+        multiverseid: commander.multiverseid,
+        name: commander.name,
+        imageUrl: commander.imageUrl
+      },
+      ligue: []
+    });
   }
 
   private handleError(error: HttpErrorResponse) {
