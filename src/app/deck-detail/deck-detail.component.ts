@@ -27,12 +27,14 @@ export class DeckDetailComponent implements OnInit {
 
   commanderSearchControl = new FormControl();
   cardSearchControl = new FormControl();
+  deckNameControl = new FormControl();
 
   filteredCards: Card[] = [];
   filteredCommanders: Card[] = [];
   commanderIsLoading: boolean = false;
   cardIsLoading: boolean = false;
 
+  quantityDisabled = true;
   quantity = 1;
   loadImage: boolean = false;
 
@@ -43,6 +45,8 @@ export class DeckDetailComponent implements OnInit {
       const id = this.route.children[0].snapshot.paramMap.get("id");
       this.deckService.getDeck(id).subscribe(deck => {
         this.deck = deck;
+        this.selectedCommander = this.deck.commander;
+        this.deckNameControl.setValue(this.deck.name);
         this.commanderSearchControl.setValue(this.deck.commander);
         this.dataSource = new MatTableDataSource(this.deck.cards);
       });
@@ -102,6 +106,17 @@ export class DeckDetailComponent implements OnInit {
     this.cardService.getCard(card.multiverseid).subscribe(card => {
       this.loadImage = false;
       this.selectedCard = card;
+      if (card.supertypes.includes('Basic')) {
+        this.quantityDisabled = false;
+      } else {
+        this.quantityDisabled = true;
+      }
     });
+  }
+
+  save() {
+    this.deck.commander = this.selectedCommander;
+    this.deck.name = this.deckNameControl.value;
+    this.deckService.addDeck(this.deck).subscribe();
   }
 }
