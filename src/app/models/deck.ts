@@ -1,7 +1,7 @@
 import { Card } from './card';
 
 export class Deck {
-  uid: number;
+  id: number;
   name: string;
   commander: Card;
   cards?: DeckCard[];
