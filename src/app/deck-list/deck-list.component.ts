@@ -22,8 +22,9 @@ export class DeckListComponent implements OnInit {
   }
 
   deckDetail(deck: Deck): void {
+    console.log(deck);
     this.selectedDeck = deck;
-    this.router.navigate(['deck', this.selectedDeck.uid]);
+    this.router.navigate(['deck', this.selectedDeck.id]);
   }
 
   createDeck(): void {
