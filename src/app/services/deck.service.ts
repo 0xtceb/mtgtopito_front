@@ -19,7 +19,6 @@ export class DeckService {
   getDecks(): Observable<Deck[]> {
     return this.http.get<Deck[]>(environment.apiUrl + environment.decks).pipe(
       map(res => {
-        console.log(res);
         return res;
       }),
       catchError(this.handleError)
@@ -38,8 +37,9 @@ export class DeckService {
       commander: {
         multiverseid: commander.multiverseid,
         name: commander.name,
-        imageUrl: commander.imageUrl
+        imageUrl: commander.imageUrl,
       },
+      cards: deck.cards,
       ligue: []
     });
   }

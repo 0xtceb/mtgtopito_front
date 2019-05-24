@@ -1,12 +1,14 @@
+import { tap, switchMap, debounceTime, finalize } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material';
-import { Deck, DeckCard } from '../models/deck';
+
 import { DeckService } from '../services/deck.service';
 import { CardService } from '../services/card.service';
+import { Deck } from '../models/deck';
 import { Card } from '../models/card';
-import { tap, switchMap, debounceTime, finalize } from 'rxjs/operators';
+
 @Component({
   selector: 'app-deck-detail',
   templateUrl: './deck-detail.component.html',
@@ -94,8 +96,8 @@ export class DeckDetailComponent implements OnInit {
     if(!this.deck.cards) {
       this.deck.cards = [];
     }
-    let deckCard = new DeckCard(card, quantity);
-    this.deck.cards.push(deckCard);
+    card.quantity = quantity;
+    this.deck.cards.push(card);
     this.quantity = 1;
     this.dataSource = new MatTableDataSource(this.deck.cards);
   }

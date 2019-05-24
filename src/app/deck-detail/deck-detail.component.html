@@ -61,21 +61,21 @@
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Nom </th>
-        <td mat-cell *matCellDef="let deckCard"> {{ deckCard.card.name }} </td>
+        <td mat-cell *matCellDef="let card"> {{ card.name }} </td>
       </ng-container>
 
       <ng-container matColumnDef="type">
         <th mat-header-cell *matHeaderCellDef> Type </th>
-        <td mat-cell *matCellDef="let deckCard"> {{ deckCard.card.types }} </td>
+        <td mat-cell *matCellDef="let card"> {{ card.types }} </td>
       </ng-container>
 
       <ng-container matColumnDef="quantity">
         <th mat-header-cell *matHeaderCellDef> Quantité </th>
-        <td mat-cell *matCellDef="let deckCard"> {{ deckCard.quantity }} </td>
+        <td mat-cell *matCellDef="let card"> {{ card.quantity }} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-      <tr mat-row *matRowDef="let deckCard; columns: columnsToDisplay;"></tr>
+      <tr mat-row *matRowDef="let card; columns: columnsToDisplay;"></tr>
     </table>
   </div>
 </div>

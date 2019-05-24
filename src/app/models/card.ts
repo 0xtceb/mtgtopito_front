@@ -6,6 +6,7 @@ export class Card {
   types: string[];
   text: string;
   legalities: Legality[];
+  quantity: number = 1;
 }
 
 class Legality {
