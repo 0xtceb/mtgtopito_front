@@ -12,7 +12,7 @@ export class DeckListComponent implements OnInit {
 
   decks: Deck[] = [];
   selectedDeck: Deck;
-
+  showAdd: boolean = false;
   constructor(
     private router: Router,
     private deckService: DeckService) { }
@@ -22,7 +22,6 @@ export class DeckListComponent implements OnInit {
   }
 
   deckDetail(deck: Deck): void {
-    console.log(deck);
     this.selectedDeck = deck;
     this.router.navigate(['deck', this.selectedDeck.id]);
   }
@@ -32,9 +31,14 @@ export class DeckListComponent implements OnInit {
   }
 
   private getDecks():void {
+
     this.deckService.getDecks().subscribe(
       (decks:Deck[]) => {
         this.decks = decks
+
+        if (!this.decks) {
+          this.showAdd = true;
+        }
       }
     );
   }

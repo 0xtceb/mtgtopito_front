@@ -4,6 +4,7 @@ export class Card {
   imageUrl: string;
   supertypes: string[];
   types: string[];
+  type: string;
   text: string;
   legalities: Legality[];
   quantity: number = 1;

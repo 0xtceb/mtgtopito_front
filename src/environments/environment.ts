@@ -9,6 +9,7 @@ export const environment = {
   currentUserUrl: "users/current/",
   createUser: "users/",
   decks: 'decks/',
+  cards: 'cards/',
 };
 
 /*

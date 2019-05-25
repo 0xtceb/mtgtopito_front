@@ -17,7 +17,6 @@ export class CardService {
     return this.http.get(this.url, {params: {"name": name}}).pipe(
       map(res => {
         let cards : Card[] = res["cards"];
-        console.log(cards);
         return cards.filter(this.hasUrl).filter(this.isLegal);
       })
     );

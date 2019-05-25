@@ -54,8 +54,10 @@ export class DeckDetailComponent implements OnInit {
       });
 
     } else {
+
       this.deck = new Deck();
       this.dataSource = new MatTableDataSource(this.deck.cards)
+
     }
 
     this.commanderSearchControl.valueChanges.pipe(
