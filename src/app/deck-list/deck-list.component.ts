@@ -31,12 +31,10 @@ export class DeckListComponent implements OnInit {
   }
 
   private getDecks():void {
-
     this.deckService.getDecks().subscribe(
       (decks:Deck[]) => {
         this.decks = decks
-
-        if (!this.decks) {
+        if (this.decks.length == 0) {
           this.showAdd = true;
         }
       }

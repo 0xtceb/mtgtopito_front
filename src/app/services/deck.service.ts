@@ -47,7 +47,6 @@ export class DeckService {
   private handleError(error: HttpErrorResponse) {
     if (error.status == 0 || error.status == 401) {
       localStorage.clear();
-      console.log(this.router);
       window.location.href = window.location.origin;
     }
     return throwError('Something bad happened; please try again later.');
