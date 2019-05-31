@@ -1,4 +1,5 @@
 export class Card {
+  url?: string;
   multiverseid: number;
   name: string;
   imageUrl: string;

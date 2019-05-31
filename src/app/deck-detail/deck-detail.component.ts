@@ -21,7 +21,7 @@ export class DeckDetailComponent implements OnInit {
               private cardService: CardService) { }
 
   dataSource = new MatTableDataSource();
-  columnsToDisplay = ['name', 'type', 'quantity'];
+  columnsToDisplay = ['name', 'type', 'quantity', 'action'];
 
   deck: Deck;
   selectedCommander: Card;
@@ -99,12 +99,14 @@ export class DeckDetailComponent implements OnInit {
       this.deck.cards = [];
     }
     card.quantity = quantity;
-    this.deck.cards.push(card);
+    if (this.deck.cards.length < 99) {
+      this.deck.cards.push(card);
+    }
     this.quantity = 1;
     this.dataSource = new MatTableDataSource(this.deck.cards);
   }
 
-  openDetails(card:Card) {
+  openDetails(card:Card): void {
     this.loadImage = true;
     this.selectedCard = null;
     this.cardService.getCard(card.multiverseid).subscribe(card => {
@@ -118,9 +120,17 @@ export class DeckDetailComponent implements OnInit {
     });
   }
 
-  save() {
+  save(): void {
     this.deck.commander = this.selectedCommander;
     this.deck.name = this.deckNameControl.value;
     this.deckService.addDeck(this.deck).subscribe();
+  }
+
+  deleteCard(card:Card): void {
+    this.cardService.deleteCard(card).subscribe((_) => {
+        let index = this.deck.cards.indexOf(card);
+        this.deck.cards.splice(index, 1);
+        this.dataSource = new MatTableDataSource(this.deck.cards);
+    });
   }
 }

@@ -61,4 +61,8 @@ export class CardService {
       })
     );
   }
+
+  public deleteCard(card: Card): Observable<any> {
+    return this.http.delete(card.url);
+  }
 }
