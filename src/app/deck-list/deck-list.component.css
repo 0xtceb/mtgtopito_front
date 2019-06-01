@@ -2,10 +2,21 @@
   max-width: 350px;
 }
 
+.deck-add {
+  margin-right: 50px;
+  margin-top: 50vh;
+  display: inline-block;
+  position: absolute;
+}
+
 .deck-list {
   margin-right: 10px;
   margin-bottom: 10px;
   display: inline-block;
+}
+
+img {
+  width:265px;
 }
 
 .add-deck {

@@ -40,4 +40,14 @@ export class DeckListComponent implements OnInit {
       }
     );
   }
+
+  deleteDeck(deck:Deck): void {
+    let index = this.decks.indexOf(deck);
+    this.deckService.deleteDeck(deck).subscribe((_) => {
+      this.decks.splice(index, 1);
+      if (this.decks.length == 0) {
+        this.showAdd = true;
+      }
+    });
+  }
 }

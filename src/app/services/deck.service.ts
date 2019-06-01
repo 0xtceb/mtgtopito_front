@@ -44,6 +44,10 @@ export class DeckService {
     });
   }
 
+  deleteDeck(deck:Deck): Observable<any> {
+    return this.http.delete(deck.url);
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.status == 0 || error.status == 401) {
       localStorage.clear();
@@ -51,4 +55,6 @@ export class DeckService {
     }
     return throwError('Something bad happened; please try again later.');
   }
+
+
 }

@@ -1,13 +1,21 @@
 <div *ngFor="let deck of decks" class="deck-list">
-  <button mat-flat-button (click)="deckDetail(deck)">
     <mat-card class="deck-card">
       <mat-card-header>
         <mat-card-title>{{ deck.name }}</mat-card-title>
         <mat-card-subtitle>{{ deck.commander.name }}</mat-card-subtitle>
       </mat-card-header>
       <img mat-card-image [src]="deck.commander.imageUrl">
-    </mat-card>
-  </button>
+    <mat-card-content>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-icon-button matTooltip="Editer" (click)="deckDetail(deck)"><mat-icon  aria-label="Editer">edit</mat-icon></button>
+      <button class="float-right" mat-icon-button matTooltip="Supprimer" (click)="deleteDeck(deck)"><mat-icon  aria-label="Supprimer">delete</mat-icon></button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<div class="deck-add">
+  <button mat-icon-button routerLink="/deck" matTooltip="Créer un deck"><mat-icon aria-label="Ajouter">add</mat-icon></button>
 </div>
 
 
