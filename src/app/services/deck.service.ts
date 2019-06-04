@@ -26,7 +26,9 @@ export class DeckService {
   }
 
   getDeck(uid: string): Observable<Deck> {
-    return this.http.get<Deck>(environment.apiUrl + environment.decks + uid);
+    return this.http.get<Deck>(environment.apiUrl + environment.decks + uid + '/').pipe(
+      catchError(this.handleError)
+    );
   }
 
   addDeck(deck: Deck): Observable<any> {
