@@ -21,9 +21,12 @@ export class AppComponent {
               public router: Router) {}
 
   ngOnInit() {
-    console.log(localStorage);
     if (localStorage.getItem("token")) {
-      this.user = new User();
+      
+      this.userService.getCurrentUser().subscribe((user:User) => {
+        this.user = user;
+      });
+
     }
   }
 
