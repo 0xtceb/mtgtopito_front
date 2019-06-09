@@ -14,7 +14,7 @@
   </mat-card>
 </div>
 
-<div class="deck-add">
+<div class="deck-add" *ngIf="!showAdd">
   <button mat-icon-button routerLink="/deck" matTooltip="Créer un deck"><mat-icon aria-label="Ajouter">add</mat-icon></button>
 </div>
 
