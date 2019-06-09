@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material';
-
+import { Router } from '@angular/router';
 import { DeckService } from '../services/deck.service';
 import { CardService } from '../services/card.service';
 import { Deck } from '../models/deck';
@@ -16,7 +16,8 @@ import { Card } from '../models/card';
 })
 export class DeckDetailComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute,
+  constructor(private router: Router,
+              private route: ActivatedRoute,
               private deckService: DeckService,
               private cardService: CardService) { }
 
@@ -39,6 +40,7 @@ export class DeckDetailComponent implements OnInit {
   quantityDisabled = true;
   quantity = 1;
   loadImage: boolean = false;
+  canUpdate: boolean = false;
 
 
   ngOnInit() {
@@ -51,6 +53,7 @@ export class DeckDetailComponent implements OnInit {
         this.deckNameControl.setValue(this.deck.name);
         this.commanderSearchControl.setValue(this.deck.commander);
         this.dataSource = new MatTableDataSource(this.deck.cards);
+        this.canUpdate = true;
       });
 
     } else {
@@ -109,21 +112,28 @@ export class DeckDetailComponent implements OnInit {
   openDetails(card:Card): void {
     this.loadImage = true;
     this.selectedCard = null;
-    this.cardService.getCard(card.multiverseid).subscribe(card => {
-      this.loadImage = false;
-      this.selectedCard = card;
-      if (card.supertypes.includes('Basic')) {
-        this.quantityDisabled = false;
-      } else {
-        this.quantityDisabled = true;
-      }
-    });
+    this.loadImage = false;
+    this.selectedCard = card;
+    if (card.supertypes.includes('Basic')) {
+      this.quantityDisabled = false;
+    } else {
+      this.quantityDisabled = true;
+    }
   }
 
   save(): void {
     this.deck.commander = this.selectedCommander;
     this.deck.name = this.deckNameControl.value;
-    this.deckService.addDeck(this.deck).subscribe();
+    this.deckService.addDeck(this.deck).subscribe((deck:Deck) => {
+      this.router.navigate(['/deck', deck.id]);
+      this.canUpdate = true;
+    });
+  }
+
+  update(deck:Deck):void {
+    this.deck.name = this.deckNameControl.value;
+    this.deck.commander = this.selectedCommander;
+    this.deckService.modifyDeck(deck).subscribe();
   }
 
   deleteCard(card:Card): void {

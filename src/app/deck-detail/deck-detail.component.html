@@ -38,7 +38,7 @@
     <mat-spinner *ngIf="loadImage" diameter="50"></mat-spinner>
 
     <mat-card *ngIf='selectedCard'>
-      <img mat-card-image class="cardPres mx-auto d-block" [src]='selectedCard.imageUrl' alt="Photo of a Shiba Inu">
+      <img mat-card-image class="cardPres mx-auto d-block" [src]='selectedCard.imageUrl'>
       <mat-card-content>
       </mat-card-content>
       <mat-card-actions>
@@ -89,4 +89,5 @@
     </table>
   </div>
 </div>
-<button mat-raised-button class="float-right" (click)="save()">Sauvegarder</button>
+<button mat-raised-button class="float-right" *ngIf="!canUpdate" (click)="save()">Sauvegarder</button>
+<button mat-raised-button class="float-right" *ngIf="canUpdate" (click)="update(deck)">Modifier</button>

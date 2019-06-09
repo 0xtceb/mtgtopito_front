@@ -31,10 +31,10 @@ export class DeckService {
     );
   }
 
-  addDeck(deck: Deck): Observable<any> {
+  addDeck(deck: Deck): Observable<Deck> {
     let commander:Card = deck.commander;
 
-    return this.http.post(environment.apiUrl + environment.decks, {
+    return this.http.post<Deck>(environment.apiUrl + environment.decks, {
       name: deck.name,
       commander: {
         multiverseid: commander.multiverseid,
@@ -44,6 +44,10 @@ export class DeckService {
       cards: deck.cards,
       ligue: []
     });
+  }
+
+  modifyDeck(deck:Deck):Observable<Deck> {
+    return this.http.put<Deck>(environment.apiUrl + environment.decks + deck.id + '/', deck);
   }
 
   deleteDeck(deck:Deck): Observable<any> {
