@@ -1,7 +1,7 @@
 import { tap, switchMap, debounceTime, finalize } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 import { DeckService } from '../services/deck.service';
@@ -28,9 +28,9 @@ export class DeckDetailComponent implements OnInit {
   selectedCommander: Card;
   selectedCard : Card;
 
-  commanderSearchControl = new FormControl();
+  commanderSearchControl = new FormControl('', Validators.required);
   cardSearchControl = new FormControl();
-  deckNameControl = new FormControl();
+  deckNameControl = new FormControl('', Validators.required);
 
   filteredCards: Card[] = [];
   filteredCommanders: Card[] = [];
@@ -41,7 +41,7 @@ export class DeckDetailComponent implements OnInit {
   quantity = 1;
   loadImage: boolean = false;
   canUpdate: boolean = false;
-
+  modified: boolean = false;
 
   ngOnInit() {
     if (this.route.children.length > 0) {
@@ -75,9 +75,10 @@ export class DeckDetailComponent implements OnInit {
 
 
     this.cardSearchControl.valueChanges.pipe(
-      debounceTime(1000),
+      debounceTime(2000),
       tap(() => {
         this.cardIsLoading = true
+        console.log("in");
       }),
       switchMap(value => this.cardService.searchCardByName(value).pipe(
         finalize(() => this.cardIsLoading = false)
@@ -87,6 +88,9 @@ export class DeckDetailComponent implements OnInit {
 
   commanderFn(card: Card) {
     if (card) {
+      if (this.canUpdate) {
+        this.modified = true;
+      }
       return card.name;
     }
   }
@@ -102,9 +106,19 @@ export class DeckDetailComponent implements OnInit {
       this.deck.cards = [];
     }
     card.quantity = quantity;
+
     if (this.deck.cards.length < 99) {
+      for(let deckCard of this.deck.cards) {
+        if(deckCard.name == card.name) {
+          return;
+        }
+      }
       this.deck.cards.push(card);
+      if (this.canUpdate) {
+        this.modified = true;
+      }
     }
+
     this.quantity = 1;
     this.dataSource = new MatTableDataSource(this.deck.cards);
   }
@@ -122,18 +136,27 @@ export class DeckDetailComponent implements OnInit {
   }
 
   save(): void {
-    this.deck.commander = this.selectedCommander;
-    this.deck.name = this.deckNameControl.value;
-    this.deckService.addDeck(this.deck).subscribe((deck:Deck) => {
-      this.router.navigate(['/deck', deck.id]);
-      this.canUpdate = true;
-    });
+    this.deckNameControl.markAsTouched();
+    this.commanderSearchControl.markAsTouched();
+    if (this.deckNameControl.valid) {
+      this.deck.commander = this.selectedCommander;
+      this.deck.name = this.deckNameControl.value;
+      this.deckService.addDeck(this.deck).subscribe((deck:Deck) => {
+        this.router.navigate(['/deck', deck.id]);
+        this.canUpdate = true;
+      });
+    }
   }
 
   update(deck:Deck):void {
-    this.deck.name = this.deckNameControl.value;
-    this.deck.commander = this.selectedCommander;
-    this.deckService.modifyDeck(deck).subscribe();
+    if (this.deckNameControl.valid) {
+      this.deck.name = this.deckNameControl.value;
+      this.deck.commander = this.selectedCommander;
+      this.deckService.modifyDeck(deck).subscribe((deck:Deck) => {
+        this.deck = deck;
+        this.modified = false;
+      });
+    }
   }
 
   deleteCard(card:Card): void {

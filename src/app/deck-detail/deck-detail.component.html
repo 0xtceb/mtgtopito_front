@@ -3,7 +3,10 @@
     <div>
       <form>
         <mat-form-field>
-          <input type="text" placeholder="Nom du deck" maxlength="20" matInput [formControl]="deckNameControl"/>
+          <input type="text" placeholder="Nom du deck" maxlength="20" matInput [formControl]="deckNameControl" [errorStateMatcher]="matcher"/>
+          <mat-error *ngIf="deckNameControl.hasError('required')">
+            Un bon deck, un bon nom.
+          </mat-error>
         </mat-form-field>
         <mat-form-field class="searchCommander">
           <input type="text" placeholder="Choisissez un commandeur" matInput [formControl]="commanderSearchControl" [matAutocomplete]="autoCommander">
@@ -16,6 +19,9 @@
               </mat-option>
             </ng-container>
           </mat-autocomplete>
+          <mat-error *ngIf="commanderSearchControl.hasError('required')">
+            Un bon deck, un bon commandeur.
+          </mat-error>
         </mat-form-field>
       </form>
     </div>
@@ -90,4 +96,4 @@
   </div>
 </div>
 <button mat-raised-button class="float-right" *ngIf="!canUpdate" (click)="save()">Sauvegarder</button>
-<button mat-raised-button class="float-right" *ngIf="canUpdate" (click)="update(deck)">Modifier</button>
+<button mat-raised-button class="float-right" *ngIf="canUpdate" [disabled]="!modified" (click)="update(deck)">Modifier</button>
