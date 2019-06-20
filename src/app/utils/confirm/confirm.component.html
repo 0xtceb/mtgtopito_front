@@ -1,0 +1,11 @@
+<div mat-dialog-title class="font-title title-center row">
+  <div class="col-sm-12">{{ data.title }}</div>
+</div>
+<div mat-dialog-content>
+  <span>{{ data.message }}</span>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="accept()">{{ data.acceptation }}</button>
+  <span class="filler"></span>
+  <button mat-raised-button (click)="refuse()">{{ data.annulation }}</button>
+</div>

@@ -28,6 +28,7 @@ import { LoadimageDirective } from './loadimage.directive';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RegisterComponent } from './register/register.component';
 import { RecaptchaModule } from 'ng-recaptcha';
+import { ConfirmComponent } from './utils/confirm/confirm.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { RecaptchaModule } from 'ng-recaptcha';
     DeckDetailComponent,
     CardDetailComponent,
     LoadimageDirective,
-    RegisterComponent
+    RegisterComponent,
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +65,7 @@ import { RecaptchaModule } from 'ng-recaptcha';
     RecaptchaModule
   ],
   exports: [LoginComponent],
-  entryComponents: [LoginComponent, RegisterComponent],
+  entryComponents: [LoginComponent, RegisterComponent, ConfirmComponent],
   providers: [
     {
       provide : HTTP_INTERCEPTORS,
